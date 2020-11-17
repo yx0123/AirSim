@@ -76,7 +76,7 @@ void AirsimROSWrapper::initialize_airsim()
 
         for (const auto& vehicle_name_ptr_pair : vehicle_name_ptr_map_)
         {
-            airsim_client_->enableApiControl(true, vehicle_name_ptr_pair.first); // todo expose as rosservice?
+            airsim_client_->enableApiControl(false, vehicle_name_ptr_pair.first); // todo expose as rosservice?
             airsim_client_->armDisarm(true, vehicle_name_ptr_pair.first); // todo exposes as rosservice?
         }
 
@@ -214,7 +214,7 @@ void AirsimROSWrapper::create_ros_pubs_from_settings_json()
                     // if {DepthPlanner, DepthPerspective,DepthVis, DisparityNormalized}, get float image
                     else
                     {
-                        current_image_request_vec.push_back(ImageRequest(curr_camera_name, curr_image_type, true));
+                        current_image_request_vec.push_back(ImageRequest(curr_camera_name, curr_image_type, true, false));
                     }
 
                     image_pub_vec_.push_back(image_transporter.advertise(curr_vehicle_name + "/" + curr_camera_name + "/" + image_type_int_to_string_map_.at(capture_setting.image_type), 1));
